@@ -1,6 +1,17 @@
 import hashlib
+import random
 
 from settings import SECRET_KEY
+
+CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,./<>?\'\"'
+
+
+def random_string(length=32, symbols=False):
+    choices = CHARACTERS
+    if symbols:
+        choices += SYMBOLS
+    return ''.join(random.choice(choices) for i in range(length))
 
 
 def sha512(content):
