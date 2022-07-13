@@ -23,7 +23,8 @@ elif MODE == 'production':
     DEBUG = False
     DB_HOST = os.environ.get('DB_HOST', 'localhost:5432')
     DB_USERNAME = os.environ.get('DB_USERNAME')
-    DB_PASSWORD = os.environ.get('DB_PASSWORD')
+    DB_PASSWORD = os.environ.get('DB_PASSWORD').replace(':', '::').replace(
+        '@', '@@')
     DB_DB = os.environ.get('DB_DB')
     SQLALCHEMY.update({
         'SQLALCHEMY_DATABASE_URI':
