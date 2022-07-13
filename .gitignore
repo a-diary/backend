@@ -1,7 +1,9 @@
 /migrations
 __pycache__
-secret.key
 db.sqlite3
+
+*.profile
+secret.key
 
 *.local
 *.local.*
