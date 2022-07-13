@@ -9,10 +9,7 @@ from models import User, db
 
 app = Flask(__name__)
 app.secret_key = settings.SECRET_KEY
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
-# app.config["SQLALCHEMY_ECHO"] = True
+app.config.update(settings.SQLALCHEMY)
 db.init_app(app)
 migrate = Migrate(app, db)
 
@@ -50,4 +47,4 @@ api.add_resource(views.DiaryListView, '/diary')
 app.register_blueprint(views.blueprint)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=settings.DEBUG)
