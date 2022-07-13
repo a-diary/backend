@@ -29,6 +29,10 @@ class UserView(Resource):
 
 class UserListView(Resource):
     def post(self):
+        if User.query.filter_by(username=g.values['username']).first():
+            return {'status': 'error', 'message': '用户名已存在'}
+        elif User.query.filter_by(email=g.values['email']).first():
+            return {'status': 'error', 'message': '邮箱已存在'}
         user = User(username=g.values['username'],
                     password=g.values['password'],
                     email=g.values['email'],

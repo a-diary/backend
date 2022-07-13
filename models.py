@@ -141,7 +141,8 @@ class Diary(db.Model):
             'tags': self.tags,
             'cover': self.cover,
             'create_time': f_dt(self.create_time),
-            'update_time': f_dt(self.update_time)
+            'update_time': f_dt(self.update_time),
+            'public': self.public,
         }
         if public == False:
             data.update({
@@ -149,7 +150,6 @@ class Diary(db.Model):
                     'id': self.user.id,
                     'username': self.user.username
                 },
-                'public': self.public,
             })
         return data
 
