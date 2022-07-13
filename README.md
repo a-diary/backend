@@ -6,5 +6,5 @@
 
 -   在根目录创建密钥文件：`python3 -c "from utils import random_string; print(random_string(64, True))" > secret.key`
 -   安装依赖：`pip3 install -r requirements.txt`
--   创建或更新数据库文件：`alembic revision --autogenerate -m "First run"` 和 `alembic upgrade head`
--   运行：`python3 app.py`
+-   创建或更新数据库文件：`flask db init` `flask db migrate` 和 `flask db upgrade`
+-   运行开发服务器：`python3 app.py`
