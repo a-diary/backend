@@ -26,7 +26,6 @@ elif MODE == 'production':
     DB_USER = os.environ.get('DB_USER')
     DB_PASSWORD = parse.quote_plus(os.environ.get('DB_PASSWORD'))
     DB_DB = os.environ.get('DB_DB')
-    print(f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_DB}', )
     SQLALCHEMY.update({
         'SQLALCHEMY_DATABASE_URI':
         f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_DB}',
