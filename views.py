@@ -119,7 +119,7 @@ class DiaryListView(Resource):
                       cover=g.values['cover'])
         db.session.add(diary)
         db.session.commit()
-        return {'status': 'success', 'diary': diary.to_json()}
+        return {'status': 'success', 'data': diary.to_json()}
 
 
 @blueprint.route('/index')
