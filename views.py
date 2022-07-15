@@ -76,7 +76,7 @@ class DiaryView(Resource):
     def put(self, id):
         if not g.user:
             return REQUIRE_LOGIN
-        diary = g.user.diarys.filter_by(id=id).first()
+        diary = g.user.diaries.filter_by(id=id).first()
         if diary is None:
             abort(404)
         diary.title = g.values['title']
@@ -91,7 +91,7 @@ class DiaryView(Resource):
     def delete(self, id):
         if not g.user:
             return REQUIRE_LOGIN
-        diary = g.user.diarys.filter_by(id=id).first()
+        diary = g.user.diaries.filter_by(id=id).first()
         if diary is None:
             abort(404)
         db.session.delete(diary)
@@ -109,7 +109,7 @@ class DiaryListView(Resource):
         if public:
             query = Diary.query.filter_by(public=True)
         else:
-            query = g.user.diarys
+            query = g.user.diaries
         pagination = query.order_by(Diary.id.desc()).paginate(page,
                                                               per_page,
                                                               error_out=False)
@@ -138,10 +138,10 @@ def diary_export():
         return REQUIRE_LOGIN
     no_range = True if g.values['no_range'] == 'true' else False
     if no_range:
-        diaries = g.user.diarys
+        diaries = g.user.diaries
     else:
         start = datetime.datetime.fromisoformat(g.values['start'])
         end = datetime.datetime.fromisoformat(g.values['end'])
-        diaries = g.user.diarys.filter(Diary.create_time.between(start, end))
+        diaries = g.user.diaries.filter(Diary.create_time.between(start, end))
     diaries = diaries.order_by(Diary.create_time.asc())
     return {'status': 'success', 'data': [d.to_json() for d in diaries]}

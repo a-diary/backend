@@ -24,7 +24,7 @@ class User(db.Model):
     save_method = db.Column(db.String(32), default='normal')
     diary_password_hash = db.Column(db.String(128), nullable=True)
 
-    diarys = db.relationship('Diary', backref='User', lazy='dynamic')
+    diaries = db.relationship('Diary', backref='User', lazy='dynamic')
 
     def to_json(self):
         return {
@@ -109,7 +109,7 @@ class User(db.Model):
 
 
 class Diary(db.Model):
-    __tablename__ = 'diarys'
+    __tablename__ = 'diaries'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Unicode(127))
     content = db.Column(db.Text)
