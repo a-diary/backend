@@ -143,13 +143,14 @@ class Diary(db.Model):
             'create_time': f_dt(self.create_time),
             'update_time': f_dt(self.update_time),
             'public': self.public,
+            'user': {
+                'nickname': self.user.nickname,
+            }
         }
         if public == False:
-            data.update({
-                'user': {
-                    'id': self.user.id,
-                    'username': self.user.username
-                },
+            data['user'].update({
+                'id': self.user.id,
+                'username': self.user.username
             })
         return data
 

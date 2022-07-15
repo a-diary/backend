@@ -88,6 +88,16 @@ class DiaryView(Resource):
         db.session.commit()
         return {'status': 'success', 'data': diary.to_json()}
 
+    def delete(self, id):
+        if not g.user:
+            return REQUIRE_LOGIN
+        diary = g.user.diarys.filter_by(id=id).first()
+        if diary is None:
+            abort(404)
+        db.session.delete(diary)
+        db.session.commit()
+        return {'status': 'success'}
+
 
 class DiaryListView(Resource):
     def get(self):
@@ -122,7 +132,16 @@ class DiaryListView(Resource):
         return {'status': 'success', 'data': diary.to_json()}
 
 
-@blueprint.route('/index')
-def index():
-    print(type(User.query.all()))
-    return 'index'
+@blueprint.route('/diary/export')
+def diary_export():
+    if not g.user:
+        return REQUIRE_LOGIN
+    no_range = True if g.values['no_range'] == 'true' else False
+    if no_range:
+        diaries = g.user.diarys
+    else:
+        start = datetime.datetime.fromisoformat(g.values['start'])
+        end = datetime.datetime.fromisoformat(g.values['end'])
+        diaries = g.user.diarys.filter(Diary.create_time.between(start, end))
+    diaries = diaries.order_by(Diary.create_time.asc())
+    return {'status': 'success', 'data': [d.to_json() for d in diaries]}
