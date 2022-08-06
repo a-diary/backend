@@ -31,3 +31,6 @@ elif MODE == 'production':
         'SQLALCHEMY_DATABASE_URI':
         f'{DB_TYPE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_DB}',
     })
+
+if os.environ.get('DEBUG') == 'False':
+    DEBUG = False
